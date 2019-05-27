@@ -1,4 +1,56 @@
-<?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="sample.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Button?>
+<AnchorPane id="AnchorPane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
+  <children>
+    <ImageView id="chair2" layoutX="103.0" layoutY="97.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/chair2.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="chair1" layoutX="165.0" layoutY="97.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/chair1.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="table2" fx:id="table1" layoutX="103.0" layoutY="116.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/table2.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="chair4" layoutX="94.0" layoutY="147.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/chair4.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView fx:id="table2" layoutX="405.0" layoutY="116.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/table2.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="table2" fx:id="table3" layoutX="103.0" layoutY="300.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/table2.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="table2" fx:id="table4" layoutX="405.0" layoutY="300.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/table2.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <ImageView id="chair3" layoutX="165.0" layoutY="152.0" pickOnBounds="true">
+      <image>
+        <Image url="@assets/chair3.png" preserveRatio="true" smooth="true" />
+      </image>
+    </ImageView>
+    <HBox fx:id="hbox1" layoutX="125.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
+    <HBox fx:id="hbox2" id="hbox" layoutX="233.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
+    <HBox id="hbox" fx:id="hbox3" layoutX="348.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
+    <HBox id="hbox" layoutX="455.0" fx:id="hbox4" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
+    <HBox id="hbox" layoutX="32.0"  fx:id="hbox5" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
+    <Button fx:id="button" onAction="#change"/>
+  </children>
+</AnchorPane>

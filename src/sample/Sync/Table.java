@@ -11,7 +11,7 @@ public class Table {
     private ArrayList<ClientGroup> clientGroups;
 
     public Table() {
-        this.size = new Random().nextInt(2)+1;
+        this.size = new Random().nextInt(4)+1;
         this.tableSem = new Semaphore(size);
         this.clientGroups = new ArrayList<ClientGroup>();
         System.out.println("Stolik z " + this.size + " miejscami");
