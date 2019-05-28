@@ -5,12 +5,14 @@ import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class Table {
+    private int id;
+
     private int size;
     private Semaphore tableSem;
     private int occupation = 0;
     private ArrayList<ClientGroup> clientGroups;
-
-    public Table() {
+    public Table(int id) {
+        this.id = id;
         this.size = new Random().nextInt(4)+1;
         this.tableSem = new Semaphore(size);
         this.clientGroups = new ArrayList<ClientGroup>();
@@ -45,6 +47,10 @@ public class Table {
        this.occupation -= clientGroup.getGroupSize();
        this.clientGroups.remove(clientGroup);
        notify();
+    }
+
+    public int getId() {
+        return id;
     }
 }
 

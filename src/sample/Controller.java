@@ -68,7 +68,7 @@ public class Controller {
 
                 container.getChildren().add(rectangle);
                 pane.getChildren().add(container);
-                containers[i+j] = container;
+                containers[2*i+j] = container;
             }
         }
 
@@ -79,17 +79,29 @@ public class Controller {
         button.setText("elo");
     }
 
+    /**
+     * Method that shows groups, represents them as circles in
+     * separate HBoxes with diffrenet colors.
+     *
+     * Hboxes are used as containers for groups.
+     * */
     public void showGroup(ClientGroup clientGroup){
         for (int i = 0; i < clientGroup.getGroupSize();i++) {
             Circle circle = new Circle();
-            circle.setFill(Color.RED);
+            circle.setFill(clientGroup.getColor());
+//            circle.setFill(Color.rgb(100, 100, 100));
             circle.setRadius(10);
             hboxes[Integer.parseInt(clientGroup.getName())].getChildren().add(circle);
         }
     }
 
     public void moveGroup(ClientGroup clientGroup){
+        hboxes[Integer.parseInt(clientGroup.getName())]
+                .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
 
+
+        hboxes[Integer.parseInt(clientGroup.getName())]
+                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY());
     }
 
     public void setSizes(int[] sizes) {
@@ -100,7 +112,7 @@ public class Controller {
             for (int j = 0; j < sizes[i]; j++) {
                 Rectangle chair = new Rectangle();
                 chair.setLayoutX(10*j);
-                chair.setWidth(10);
+                chair.setWidth(8);
                 chair.setHeight(10);
                 chair.setFill(Color.PINK);
                 chairs[j] = chair;

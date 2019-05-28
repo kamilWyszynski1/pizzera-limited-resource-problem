@@ -5,7 +5,7 @@ public class Pizzeria {
 
     public Pizzeria() {
         for (int i = 0; i < tables.length ; i++) {
-            tables[i] = new Table();
+            tables[i] = new Table(i);
         }
     }
 

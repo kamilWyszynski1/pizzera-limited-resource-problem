@@ -19,14 +19,14 @@ public class Main extends Application {
         Controller controller = loader.getController();
         controller.setSizes(pizzeria.getSizes());
 
-        for (int i = 0; i < 5; i++) {
-            (new ClientGroup(i, pizzeria, controller)).start();
-        }
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 640, 640));
         primaryStage.show();
 
+        for (int i = 0; i < 5; i++) {
+            (new ClientGroup(i, pizzeria, controller)).start();
+        }
 
 
     }
