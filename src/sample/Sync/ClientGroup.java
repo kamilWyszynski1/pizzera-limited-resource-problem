@@ -27,38 +27,59 @@ public class ClientGroup extends Thread {
         pizzeria = pizz;
         this.controller = controller;
         this.generator = new Random();
-        this.color = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
-        this.groupSize = generator.nextInt(3)+1;
+        this.randomize();
         System.out.println("grupa o licznosci: " + this.groupSize);
     }
 
     public void run() {
-        Platform.runLater(()-> controller.showGroup(this));
-        System.out.println("przychodzi do pizzeri" + getName());
-        pizzeria.find_place(this);
         final CountDownLatch doneLatch = new CountDownLatch(1);
+        while(true) {
+            Platform.runLater(() -> controller.showGroup(this));
+            System.out.println("przychodzi do pizzeri" + getName());
+            pizzeria.find_place(this);
 
-        Platform.runLater(()-> {
+            Platform.runLater(() -> {
+                try {
+                    controller.moveGroup(this);
+                } finally {
+                    doneLatch.countDown();
+                }
+            });
+            System.out.println("znajduje miejsce");
+
+
+            // group leaves
             try {
-                controller.moveGroup(this);
-            } finally {
-                doneLatch.countDown();
+                doneLatch.await();
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-        System.out.println("znajduje miejsce");
 
+            Platform.runLater(() -> {
+                try {
+                    controller.removeGroup(this);
+                } finally {
+                    doneLatch.countDown();
+                }
+            });
 
-        // group leaves
-        try {
-            doneLatch.await();
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                doneLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            this.table.release(this);
+            this.table = null;
+            this.randomize();
         }
 
-        this.table.release(this);
-        this.table = null;
+    }
 
+    private void randomize(){
+        this.groupSize = generator.nextInt(3)+1;
+        this.color = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
     }
 
     public int getGroupSize() {

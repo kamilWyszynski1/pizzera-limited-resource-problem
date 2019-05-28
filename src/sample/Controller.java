@@ -95,6 +95,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Called right after cachier gives table to the group.
+     * Hbox is moved to the given table. Table's index is written
+     * in clientGroup.Table.id variable.
+     * */
     public void moveGroup(ClientGroup clientGroup){
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
@@ -102,6 +107,19 @@ public class Controller {
 
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY());
+    }
+
+    /**
+     * Called right after group Thread perform its critical section.
+     * Set group's HBox to the default position.*/
+    public void removeGroup(ClientGroup clientGroup){
+        hboxes[Integer.parseInt(clientGroup.getName())]
+                .setLayoutX(100+Integer.parseInt(clientGroup.getName()));
+
+        hboxes[Integer.parseInt(clientGroup.getName())]
+                .setLayoutY(520);
+
+        hboxes[Integer.parseInt(clientGroup.getName())].getChildren().removeAll();
     }
 
     public void setSizes(int[] sizes) {
