@@ -17,6 +17,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();
+        controller.setSizes(pizzeria.getSizes());
 
         for (int i = 0; i < 5; i++) {
             (new ClientGroup(i, pizzeria, controller)).start();

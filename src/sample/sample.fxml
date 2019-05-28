@@ -10,23 +10,11 @@
 
 <AnchorPane id="AnchorPane" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controller">
   <children>
-    <HBox fx:id="hbox1" layoutX="125.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0">
-      <children>
-        <Circle fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
-      </children>
-    </HBox>
+    <HBox fx:id="hbox1" layoutX="125.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
     <HBox id="hbox" fx:id="hbox2" layoutX="233.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
     <HBox id="hbox" fx:id="hbox3" layoutX="348.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
     <HBox id="hbox" fx:id="hbox4" layoutX="455.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
     <HBox id="hbox" fx:id="hbox5" layoutX="32.0" layoutY="518.0" prefHeight="23.0" prefWidth="67.0" />
     <Button fx:id="button" onAction="#change" />
-    <Rectangle fx:id="table1" arcHeight="5.0" arcWidth="5.0" height="73.0" layoutX="102.0" layoutY="80.0" strokeType="INSIDE" strokeWidth="0.0" width="90.0">
-      <fill>
-        <Color blue="0.375" green="0.375" red="0.375" fx:id="x1" />
-      </fill>
-    </Rectangle>
-    <Rectangle fx:id="table3" arcHeight="5.0" arcWidth="5.0" fill="$x1" height="73.0" layoutX="410.0" layoutY="80.0" strokeType="INSIDE" strokeWidth="0.0" width="90.0" />
-    <Rectangle fx:id="table2" arcHeight="5.0" arcWidth="5.0" fill="$x1" height="73.0" layoutX="102.0" layoutY="264.0" strokeType="INSIDE" strokeWidth="0.0" width="90.0" />
-    <Rectangle fx:id="table4" arcHeight="5.0" arcWidth="5.0" fill="$x1" height="73.0" layoutX="410.0" layoutY="264.0" strokeType="INSIDE" strokeWidth="0.0" width="90.0" />
   </children>
 </AnchorPane>

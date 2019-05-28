@@ -9,6 +9,15 @@ public class Pizzeria {
         }
     }
 
+    public int[] getSizes(){
+        int[] sizes = new int[4];
+        for (int i = 0; i < sizes.length; i++) {
+            sizes[i] = tables[i].getSize();
+        }
+
+        return sizes;
+    }
+
     public void find_place(ClientGroup clientGroup){
         int i = 0;
         boolean found = false;
