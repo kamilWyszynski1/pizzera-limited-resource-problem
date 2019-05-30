@@ -17,10 +17,20 @@ public class ClientGroup extends Thread {
     private Table table;
     private Color color;
 
+
     public Paint getColor() {
         return color;
     }
 
+    public ClientGroup(int size, int id, Pizzeria pizz, Controller controller){
+        super(String.valueOf(id));
+        pizzeria = pizz;
+        this.groupSize = size;
+        this.controller = controller;
+        this.generator = new Random();
+        this.randomize();
+        System.out.println("grupa o licznosci: " + this.groupSize);
+    }
 
     public ClientGroup(int id, Pizzeria pizz, Controller controller){
         super(String.valueOf(id));
@@ -33,8 +43,14 @@ public class ClientGroup extends Thread {
 
     public void run() {
         final CountDownLatch doneLatch = new CountDownLatch(1);
-        while(true) {
+        boolean run = true;
+        while(run) {
             Platform.runLater(() -> controller.showGroup(this));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("przychodzi do pizzeri" + getName());
             pizzeria.find_place(this);
 
@@ -45,7 +61,7 @@ public class ClientGroup extends Thread {
                     doneLatch.countDown();
                 }
             });
-            System.out.println("znajduje miejsce");
+            System.out.println("znajduje miejsce"+this.table.getId());
 
 
             // group leaves
@@ -56,29 +72,30 @@ public class ClientGroup extends Thread {
                 e.printStackTrace();
             }
 
-            Platform.runLater(() -> {
-                try {
-                    controller.removeGroup(this);
-                } finally {
-                    doneLatch.countDown();
-                }
-            });
-
-            try {
-                doneLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            Platform.runLater(() -> {
+//                try {
+//                    controller.removeGroup(this);
+//                } finally {
+//                    doneLatch.countDown();
+//                }
+//            });
+//
+//            try {
+//                doneLatch.await();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             this.table.release(this);
             this.table = null;
             this.randomize();
+            run = false;
         }
 
     }
 
     private void randomize(){
-        this.groupSize = generator.nextInt(3)+1;
+//        this.groupSize = generator.nextInt(3)+1;
         this.color = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
     }
 

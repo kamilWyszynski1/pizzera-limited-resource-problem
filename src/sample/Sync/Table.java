@@ -1,6 +1,7 @@
 package sample.Sync;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
@@ -23,12 +24,20 @@ public class Table {
         return size;
     }
 
+    /**
+     * Methods determines if table can be occupied by group.
+     * We need to use Iterator to iterate through
+     * clientGroups that already sit to avoid
+     * ConcurrentModificationException.*/
     public boolean canSit(ClientGroup clientGroup){
         if(size-occupation < clientGroup.getGroupSize())
             return false;
 
-        for (ClientGroup group : this.clientGroups) {
-            if (clientGroup.getGroupSize() != group.getGroupSize())
+        Iterator<ClientGroup> iter = this.clientGroups.iterator();
+        while (iter.hasNext()) {
+            ClientGroup group = iter.next();
+
+            if(group.getGroupSize() != clientGroup.getGroupSize())
                 return false;
         }
         return true;

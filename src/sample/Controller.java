@@ -101,12 +101,26 @@ public class Controller {
      * in clientGroup.Table.id variable.
      * */
     public void moveGroup(ClientGroup clientGroup){
+//        if (containers[clientGroup.getTable().getId()].getChildren() != null) {
+//
+//            hboxes[Integer.parseInt(clientGroup.getName())]
+//                    .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
+//
+//
+//            hboxes[Integer.parseInt(clientGroup.getName())]
+//                    .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY() + containersChildrenSize*20);
+//        }
+//        else{
+        int containersChildrenSize = containers[clientGroup.getTable().getId()].getChildren().size();
+        System.out.println(containersChildrenSize);
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
 
 
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY());
+                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+
+                        containersChildrenSize*20);
+//        }
     }
 
     /**
@@ -114,12 +128,12 @@ public class Controller {
      * Set group's HBox to the default position.*/
     public void removeGroup(ClientGroup clientGroup){
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutX(100+Integer.parseInt(clientGroup.getName()));
+                .setLayoutX(100+95*Integer.parseInt(clientGroup.getName()));
 
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutY(520);
 
-        hboxes[Integer.parseInt(clientGroup.getName())].getChildren().removeAll();
+        hboxes[Integer.parseInt(clientGroup.getName())].getChildren().clear();
     }
 
     public void setSizes(int[] sizes) {

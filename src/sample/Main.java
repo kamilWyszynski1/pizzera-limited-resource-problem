@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.show();
 
         for (int i = 0; i < 5; i++) {
-            (new ClientGroup(i, pizzeria, controller)).start();
+            (new ClientGroup(2, i,  pizzeria, controller)).start();
         }
 
 
