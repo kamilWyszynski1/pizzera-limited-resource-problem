@@ -12,19 +12,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        int threadsAmount  = 10;
         Pizzeria pizzeria = new Pizzeria();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();
         controller.setSizes(pizzeria.getSizes());
+        controller.setAmountOfBoxes(threadsAmount);
 
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 640, 640));
         primaryStage.show();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < threadsAmount; i++) {
             (new ClientGroup(2, i,  pizzeria, controller)).start();
         }
 

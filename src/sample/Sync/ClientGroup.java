@@ -46,13 +46,12 @@ public class ClientGroup extends Thread {
         boolean run = true;
         while(run) {
             Platform.runLater(() -> controller.showGroup(this));
-            System.out.println("przychodzi do pizzeri" + getName());
             try {
                 pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            System.out.println(getName()+"."+this.getGroupSize()+" -> "+this.table.getId()+"."+this.table.getSize());
             Platform.runLater(() -> {
                 try {
                     controller.moveGroup(this);
@@ -60,7 +59,6 @@ public class ClientGroup extends Thread {
                     doneLatch.countDown();
                 }
             });
-            System.out.println("znajduje miejsce"+this.table.getId());
 
 
             // group leaves
@@ -81,6 +79,8 @@ public class ClientGroup extends Thread {
 
             try {
                 doneLatch.await();
+                System.out.println(getName()+" <- "+this.table.getId()+"."+this.table.getSize());
+
                 this.table.release(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();

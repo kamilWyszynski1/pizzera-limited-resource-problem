@@ -20,33 +20,27 @@ public class Controller {
     public Rectangle table3;
     public Rectangle table4;
 //    public Rectangle[] tables = new Rectangle[]{table1, table2, table3, table4};
-    public int[] sizes = new int[4];
+    private int[] sizes = new int[4];
+
+    private int amountOfBoxes;
 
     public Button button;
 
     private Pane[] containers = new Pane[4];
-    private HBox[] hboxes = new HBox[5];
-    public AnchorPane pane;
 
+    private HBox[] hboxes;
+    public AnchorPane pane;
     public Controller() {
     }
 
     @FXML
     private URL location;
+
     @FXML
     private ResourceBundle resources;
-
     @FXML
     private void initialize(){
         // Create 5 HBoxes for first group's positions
-        for (int i = 0; i < hboxes.length; i++) {
-            HBox box = new HBox();
-            box.setLayoutX(100+95*i);
-            box.setLayoutY(520);
-            box.setPrefSize(20, 60);
-            hboxes[i] = box;
-        }
-        pane.getChildren().addAll(hboxes);
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
@@ -151,5 +145,22 @@ public class Controller {
             containers[i].getChildren().addAll(chairs);
         }
 
+    }
+
+    /**
+     * Sets amount of HBoxes which contain our groups.
+     * And initialize them in some kind of grid.*/
+    public void setAmountOfBoxes(int amountOfBoxes) {
+        this.amountOfBoxes = amountOfBoxes;
+
+        this.hboxes = new HBox[this.amountOfBoxes];
+        for (int i = 0; i < hboxes.length; i++) {
+            HBox box = new HBox();
+            box.setLayoutX(20+60*i);
+            box.setLayoutY(520+40*(i%2));
+            box.setPrefSize(20, 60);
+            hboxes[i] = box;
+        }
+        pane.getChildren().addAll(hboxes);
     }
 }
