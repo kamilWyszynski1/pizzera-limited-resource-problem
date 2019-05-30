@@ -13,15 +13,16 @@ import sample.Sync.ClientGroup;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller's class to handle:
+ * 1. Initialization of Tables and Hboxes
+ *    which contains ClientGroups graphical representation
+ * 2. Graphical represenation of ClientGroups as Circles with
+ *    diffrenet colors.
+ * 3. Movement of ClientGroups - moving towards table and removing
+ *    Group from the table.
+ **/
 public class Controller {
-
-    public Rectangle table1;
-    public Rectangle table2;
-    public Rectangle table3;
-    public Rectangle table4;
-//    public Rectangle[] tables = new Rectangle[]{table1, table2, table3, table4};
-    private int[] sizes = new int[4];
-
     private int amountOfBoxes;
 
     public Button button;
@@ -38,6 +39,8 @@ public class Controller {
 
     @FXML
     private ResourceBundle resources;
+
+    /***/
     @FXML
     private void initialize(){
         // Create 5 HBoxes for first group's positions
@@ -132,8 +135,6 @@ public class Controller {
     /**
      * Method sets sizes of each table.*/
     public void setSizes(int[] sizes) {
-        this.sizes = sizes;
-
         for (int i = 0; i < sizes.length ; i++) {
             Rectangle[] chairs = new Rectangle[sizes[i]];
             for (int j = 0; j < sizes[i]; j++) {
