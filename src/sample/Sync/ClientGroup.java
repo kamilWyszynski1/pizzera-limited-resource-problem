@@ -46,13 +46,12 @@ public class ClientGroup extends Thread {
         boolean run = true;
         while(run) {
             Platform.runLater(() -> controller.showGroup(this));
+            System.out.println("przychodzi do pizzeri" + getName());
             try {
-                Thread.sleep(1000);
+                pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("przychodzi do pizzeri" + getName());
-            pizzeria.find_place(this);
 
             Platform.runLater(() -> {
                 try {
@@ -67,35 +66,35 @@ public class ClientGroup extends Thread {
             // group leaves
             try {
                 doneLatch.await();
-                Thread.sleep(5000);
+                Thread.sleep(this.generator.nextInt(8000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-//            Platform.runLater(() -> {
-//                try {
-//                    controller.removeGroup(this);
-//                } finally {
-//                    doneLatch.countDown();
-//                }
-//            });
-//
-//            try {
-//                doneLatch.await();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            Platform.runLater(() -> {
+                try {
+                    controller.removeGroup(this);
+                } finally {
+                    doneLatch.countDown();
+                }
+            });
 
-            this.table.release(this);
+            try {
+                doneLatch.await();
+                this.table.release(this);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             this.table = null;
             this.randomize();
-            run = false;
+//            run = false;
         }
 
     }
 
     private void randomize(){
-//        this.groupSize = generator.nextInt(3)+1;
+        this.groupSize = generator.nextInt(3)+1;
         this.color = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
     }
 

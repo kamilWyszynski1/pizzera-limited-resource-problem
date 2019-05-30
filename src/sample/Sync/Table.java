@@ -29,7 +29,7 @@ public class Table {
      * We need to use Iterator to iterate through
      * clientGroups that already sit to avoid
      * ConcurrentModificationException.*/
-    public boolean canSit(ClientGroup clientGroup){
+    public synchronized boolean canSit(ClientGroup clientGroup){
         if(size-occupation < clientGroup.getGroupSize())
             return false;
 
@@ -44,22 +44,25 @@ public class Table {
     }
 
     public synchronized void occupy(ClientGroup clientGroup) throws InterruptedException {
-        while (this.size - this.occupation < clientGroup.getGroupSize()) {
-                wait();
-            }
+
         clientGroup.setTable(this);
         this.occupation += clientGroup.getGroupSize();
         this.clientGroups.add(clientGroup);
+
         }
 
-    public synchronized void release(ClientGroup clientGroup){
+    public synchronized void release(ClientGroup clientGroup) throws InterruptedException {
+
        this.occupation -= clientGroup.getGroupSize();
        this.clientGroups.remove(clientGroup);
-       notify();
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getOccupation(){
+        return this.occupation;
     }
 }
 

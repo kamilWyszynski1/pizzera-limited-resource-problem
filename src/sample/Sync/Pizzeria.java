@@ -18,15 +18,15 @@ public class Pizzeria {
         return sizes;
     }
 
-    public void find_place(ClientGroup clientGroup){
+    public void find_place(ClientGroup clientGroup) throws InterruptedException {
         int i = 0;
-        boolean found = false;
-        while(!found) {
+        while(true) {
             Table table = tables[i];
             if (table.canSit(clientGroup)) {
                 try {
                     table.occupy(clientGroup);
-                    found = true;
+
+                    return;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

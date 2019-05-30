@@ -111,15 +111,14 @@ public class Controller {
 //                    .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY() + containersChildrenSize*20);
 //        }
 //        else{
-        int containersChildrenSize = containers[clientGroup.getTable().getId()].getChildren().size();
-        System.out.println(containersChildrenSize);
+        int containersChildrenSize = clientGroup.getTable().getOccupation();
+
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
 
 
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+
-                        containersChildrenSize*20);
+                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+containersChildrenSize*20);
 //        }
     }
 
