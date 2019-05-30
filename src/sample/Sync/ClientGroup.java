@@ -46,7 +46,9 @@ public class ClientGroup extends Thread {
         boolean run = true;
         while(run) {
             Platform.runLater(() -> controller.showGroup(this));
+
             try {
+                Thread.sleep(3000);
                 pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();

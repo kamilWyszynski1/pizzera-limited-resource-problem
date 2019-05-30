@@ -121,14 +121,16 @@ public class Controller {
      * Set group's HBox to the default position.*/
     public void removeGroup(ClientGroup clientGroup){
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutX(100+95*Integer.parseInt(clientGroup.getName()));
+                .setLayoutX(20+60*Integer.parseInt(clientGroup.getName()));
 
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutY(520);
+                .setLayoutY(520+40*(clientGroup.getId()%2));
 
         hboxes[Integer.parseInt(clientGroup.getName())].getChildren().clear();
     }
 
+    /**
+     * Method sets sizes of each table.*/
     public void setSizes(int[] sizes) {
         this.sizes = sizes;
 
