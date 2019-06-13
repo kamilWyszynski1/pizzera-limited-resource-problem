@@ -95,7 +95,6 @@ public class Controller {
      * in clientGroup.Table.id variable.
      * */
     public void moveGroup(ClientGroup clientGroup, int place){
-        int containersChildrenSize = clientGroup.getTable().getOccupation();
 
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
@@ -103,7 +102,6 @@ public class Controller {
 
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+20*place);
-//        }
     }
 
     /**
@@ -134,6 +132,7 @@ public class Controller {
                 chairs[j] = chair;
             }
             containers[i].getChildren().addAll(chairs);
+            containers[i].setAccessibleText(String.valueOf(0));
         }
 
     }

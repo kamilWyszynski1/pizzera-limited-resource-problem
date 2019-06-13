@@ -6,7 +6,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Pizzeria {
     private Table[] tables = new Table[4];
-    private final Lock lock = new ReentrantLock();
+    private final Lock lockBig = new ReentrantLock();
+    private final Lock lockSmall = new ReentrantLock();
+    private boolean priority = false;
 
     /**
      * Tables initialization. Table sizes are random Integers
@@ -19,6 +21,7 @@ public class Pizzeria {
             this.tables[i] = new Table(i);
         }
 
+
         // check their sizes
         int amountOfBigTables = 0;
         for (Table table: this.tables) {
@@ -27,7 +30,15 @@ public class Pizzeria {
         }
 
         // we need to provide at least one table with 3 seats
-        if (amountOfBigTables == 0) {
+        if (amountOfBigTables == 1) {
+            priority = true;
+            for (Table table: this.tables) {
+                if (table.getSize() >= 3)
+                    table.setPriority();
+            }
+        }
+        else if (amountOfBigTables == 0) {
+            priority = true;
             this.tables[0].setSize(3);
             this.tables[0].setPriority();
         } else if (amountOfBigTables < 2) {
@@ -38,6 +49,7 @@ public class Pizzeria {
                 }
             }
         }
+        System.out.println(priority);
 
     }
 
@@ -52,9 +64,9 @@ public class Pizzeria {
 
     public int find_place(ClientGroup clientGroup) throws InterruptedException {
         int i = 0;
-        int place;
+        int place = 0;
         Table[] appropriateTables;
-        if (clientGroup.getGroupSize() < 2) {
+        if (clientGroup.getGroupSize() < 3) {
             appropriateTables = Arrays.stream(tables).filter(
                     x -> x.getSize() >= clientGroup.getGroupSize() && !x.isPriority())
                     .toArray(Table[]::new);
@@ -67,15 +79,39 @@ public class Pizzeria {
         }
 
         while(true) {
-            lock.lock();
             Table table = appropriateTables[i];
-            if (table.canSit(clientGroup)) {
-                place = table.occupy(clientGroup);
-                lock.unlock();
-                return place;
+            if (priority){
+                if (clientGroup.getGroupSize() >= 2) {
+                    lockBig.lock();
+                    if (table.canSit(clientGroup)) {
+                        place = table.occupy(clientGroup);
+                        lockBig.unlock();
+                        return place;
+                    }
+                    lockBig.unlock();
+
+                }
+                else{
+                    lockSmall.lock();
+                    if (table.canSit(clientGroup)) {
+                        place = table.occupy(clientGroup);
+                        lockSmall.unlock();
+                        return place;
+                    }
+                    lockSmall.unlock();
+                }
+
             }
-            lock.unlock();
-            i = (i+1)%appropriateTables.length;
+            else{
+                lockBig.lock();
+                if (table.canSit(clientGroup)) {
+                    place = table.occupy(clientGroup);
+                    lockBig.unlock();
+                    return place;
+                }
+                lockBig.unlock();
+            }
+            i = (i + 1) % appropriateTables.length;
         }
     }
 }

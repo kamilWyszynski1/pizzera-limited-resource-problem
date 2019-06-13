@@ -16,6 +16,7 @@ public class Main extends Application {
         int threadsAmount  = 10;
         Pizzeria pizzeria = new Pizzeria();
 
+        // scene loader, javaFX fxml files
         FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/sample.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();

@@ -13,15 +13,21 @@ public class Table {
     private Semaphore tableSem;
     private int occupation = 0;
     private ArrayList<ClientGroup> clientGroups;
-
     private boolean priority = false;
-
     private int groupsCount = 0;
+    private boolean chairs[];
+
     public Table(int id) {
         this.id = id;
         this.size = new Random().nextInt(4)+1;
         this.tableSem = new Semaphore(size);
         this.clientGroups = new ArrayList<ClientGroup>();
+
+        this.chairs = new boolean[this.size];
+        for (int i = 0; i < size ; i++) {
+            chairs[i] = false;
+        }
+
         System.out.println("Stolik z " + this.size + " miejscami");
     }
 
@@ -52,7 +58,7 @@ public class Table {
             return true;
         }
     }
-    public synchronized int occupy(ClientGroup clientGroup) throws InterruptedException {
+    public synchronized int occupy(ClientGroup clientGroup) {
         clientGroup.setTable(this);
         occupation += clientGroup.getGroupSize();
         clientGroups.add(clientGroup);
