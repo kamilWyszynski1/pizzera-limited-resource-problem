@@ -13,9 +13,10 @@ public class Table {
     private Semaphore tableSem;
     private int occupation = 0;
     private ArrayList<ClientGroup> clientGroups;
-    private boolean priority = false;
-    private int groupsCount = 0;
 
+    private boolean priority = false;
+
+    private int groupsCount = 0;
     public Table(int id) {
         this.id = id;
         this.size = new Random().nextInt(4)+1;
@@ -23,6 +24,7 @@ public class Table {
         this.clientGroups = new ArrayList<ClientGroup>();
         System.out.println("Stolik z " + this.size + " miejscami");
     }
+
     /**
      * Methods determines if table can be occupied by group.
      * We need to use Iterator to iterate through
@@ -50,7 +52,6 @@ public class Table {
             return true;
         }
     }
-
     public synchronized int occupy(ClientGroup clientGroup) throws InterruptedException {
         clientGroup.setTable(this);
         occupation += clientGroup.getGroupSize();
@@ -94,5 +95,9 @@ public class Table {
     }
 
     public int getGroupsCount(){ return this.groupsCount; }
+
+    public boolean isPriority() {
+        return priority;
+    }
 }
 

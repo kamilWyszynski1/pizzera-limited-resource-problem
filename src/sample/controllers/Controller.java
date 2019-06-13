@@ -2,6 +2,7 @@ package sample.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -115,7 +116,8 @@ public class Controller {
         hboxes[Integer.parseInt(clientGroup.getName())]
                 .setLayoutY(520+40*(clientGroup.getId()%2));
 
-        hboxes[Integer.parseInt(clientGroup.getName())].getChildren().clear();
+        hboxes[Integer.parseInt(clientGroup.getName())].getChildren().removeIf(n -> n instanceof Circle);
+
     }
 
     /**
@@ -148,6 +150,12 @@ public class Controller {
             box.setLayoutX(20+60*i);
             box.setLayoutY(520+40*(i%2));
             box.setPrefSize(20, 60);
+
+            Label label = new Label();
+            label.setPrefWidth(20);
+            label.setPrefHeight(10);
+            label.setText(String.valueOf(i));
+            box.getChildren().add(label);
             hboxes[i] = box;
         }
         pane.getChildren().addAll(hboxes);

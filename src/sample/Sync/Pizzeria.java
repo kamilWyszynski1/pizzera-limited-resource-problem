@@ -53,9 +53,19 @@ public class Pizzeria {
     public int find_place(ClientGroup clientGroup) throws InterruptedException {
         int i = 0;
         int place;
-        Table[] appropriateTables = Arrays.stream(tables).filter(x -> x.getSize() >= clientGroup.getGroupSize())
-                                            .toArray(Table[]::new);
-        System.out.println("!!!!!!!!!"+ Arrays.toString(appropriateTables));
+        Table[] appropriateTables;
+        if (clientGroup.getGroupSize() < 2) {
+            appropriateTables = Arrays.stream(tables).filter(
+                    x -> x.getSize() >= clientGroup.getGroupSize() && !x.isPriority())
+                    .toArray(Table[]::new);
+
+        }
+        else{
+            appropriateTables = Arrays.stream(tables).filter(
+                    x -> x.getSize() >= clientGroup.getGroupSize())
+                    .toArray(Table[]::new);
+        }
+
         while(true) {
             lock.lock();
             Table table = appropriateTables[i];

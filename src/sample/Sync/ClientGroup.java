@@ -50,12 +50,13 @@ public class ClientGroup extends Thread {
             Platform.runLater(() -> controller.showGroup(this));
 
             try {
-                Thread.sleep(3000);
                 place = pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             System.out.println(getName()+"."+this.getGroupSize()+" -> "+this.table.getId()+"."+this.table.getSize());
+
+
             Platform.runLater(() -> {
                 try {
                     controller.moveGroup(this, place);
