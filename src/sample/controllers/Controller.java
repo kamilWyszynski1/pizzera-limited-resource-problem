@@ -101,7 +101,7 @@ public class Controller {
 
 
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+20*place);
+                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+20*(place+1));
     }
 
     /**

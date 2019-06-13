@@ -15,7 +15,7 @@ public class Table {
     private ArrayList<ClientGroup> clientGroups;
     private boolean priority = false;
     private int groupsCount = 0;
-    private boolean chairs[];
+    private int chairs[];
 
     public Table(int id) {
         this.id = id;
@@ -23,9 +23,11 @@ public class Table {
         this.tableSem = new Semaphore(size);
         this.clientGroups = new ArrayList<ClientGroup>();
 
-        this.chairs = new boolean[this.size];
+        // 0 - chair is empty
+        // 1 - chair is occupied
+        this.chairs = new int[this.size];
         for (int i = 0; i < size ; i++) {
-            chairs[i] = false;
+            chairs[i] = 0;
         }
 
         System.out.println("Stolik z " + this.size + " miejscami");
@@ -64,14 +66,24 @@ public class Table {
         clientGroups.add(clientGroup);
         groupsCount++;
 
-        return groupsCount;
+        for (int i = 0; i < size; i += clientGroup.getGroupSize()) {
+            if (chairs[i] == 0){
+                for (int j = i; j < clientGroup.getGroupSize(); j++) {
+                    chairs[j] = 1;
+                }
+                return i;
+            }
+        }
+        return 1;
     }
 
-    public synchronized void release(ClientGroup clientGroup) throws InterruptedException {
-
+    public synchronized void release(ClientGroup clientGroup, int place) throws InterruptedException {
        occupation -= clientGroup.getGroupSize();
        clientGroups.remove(clientGroup);
        groupsCount--;
+        for (int i = place; i < clientGroup.getGroupSize(); i++) {
+            chairs[i] = 0;
+        }
        notifyAll();
     }
 

@@ -48,8 +48,8 @@ public class ClientGroup extends Thread {
 
         while(run) {
             Platform.runLater(() -> controller.showGroup(this));
-
             try {
+                Thread.sleep(3000);
                 place = pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -86,14 +86,14 @@ public class ClientGroup extends Thread {
                 doneLatch.await();
                 System.out.println(getName()+" <- "+this.table.getId()+"."+this.table.getSize());
 
-                this.table.release(this);
+                this.table.release(this, place);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             this.table = null;
+            this.place = 0;
             this.randomize();
-//            run = false;
         }
 
     }
