@@ -3,7 +3,7 @@ package sample.Sync;
 import javafx.application.Platform;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import sample.Controller;
+import sample.controllers.Controller;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -16,6 +16,7 @@ public class ClientGroup extends Thread {
     private Controller controller;
     private Table table;
     private Color color;
+    private int place = 0;
 
 
     public Paint getColor() {
@@ -44,19 +45,20 @@ public class ClientGroup extends Thread {
     public void run() {
         final CountDownLatch doneLatch = new CountDownLatch(1);
         boolean run = true;
+
         while(run) {
             Platform.runLater(() -> controller.showGroup(this));
 
             try {
                 Thread.sleep(3000);
-                pizzeria.find_place(this);
+                place = pizzeria.find_place(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             System.out.println(getName()+"."+this.getGroupSize()+" -> "+this.table.getId()+"."+this.table.getSize());
             Platform.runLater(() -> {
                 try {
-                    controller.moveGroup(this);
+                    controller.moveGroup(this, place);
                 } finally {
                     doneLatch.countDown();
                 }
@@ -98,6 +100,7 @@ public class ClientGroup extends Thread {
     private void randomize(){
         this.groupSize = generator.nextInt(3)+1;
         this.color = Color.rgb(generator.nextInt(255), generator.nextInt(255), generator.nextInt(255));
+        this.place = 0;
     }
 
     public int getGroupSize() {

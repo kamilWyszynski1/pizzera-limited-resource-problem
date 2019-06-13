@@ -1,4 +1,4 @@
-package sample;
+package sample.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -55,10 +55,10 @@ public class Controller {
                 container.setPrefHeight(200);
                 container.setPrefWidth(200);
 
-                rectangle.setWidth(120);
-                rectangle.setHeight(80);
-                rectangle.setLayoutX(50);
-                rectangle.setLayoutY(55);
+                rectangle.setWidth(100);
+                rectangle.setHeight(100);
+                rectangle.setLayoutY(30);
+                rectangle.setLayoutX(100);
                 rectangle.setStrokeWidth(1.0);
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setFill(Color.DARKCYAN);
@@ -71,10 +71,6 @@ public class Controller {
 
     }
 
-    @FXML
-    private void change(){
-        button.setText("elo");
-    }
 
     /**
      * Method that shows groups, represents them as circles in
@@ -97,17 +93,7 @@ public class Controller {
      * Hbox is moved to the given table. Table's index is written
      * in clientGroup.Table.id variable.
      * */
-    public void moveGroup(ClientGroup clientGroup){
-//        if (containers[clientGroup.getTable().getId()].getChildren() != null) {
-//
-//            hboxes[Integer.parseInt(clientGroup.getName())]
-//                    .setLayoutX(containers[clientGroup.getTable().getId()].getLayoutX());
-//
-//
-//            hboxes[Integer.parseInt(clientGroup.getName())]
-//                    .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY() + containersChildrenSize*20);
-//        }
-//        else{
+    public void moveGroup(ClientGroup clientGroup, int place){
         int containersChildrenSize = clientGroup.getTable().getOccupation();
 
         hboxes[Integer.parseInt(clientGroup.getName())]
@@ -115,7 +101,7 @@ public class Controller {
 
 
         hboxes[Integer.parseInt(clientGroup.getName())]
-                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+containersChildrenSize*20);
+                .setLayoutY(containers[clientGroup.getTable().getId()].getLayoutY()+20*place);
 //        }
     }
 

@@ -50,8 +50,9 @@ public class Pizzeria {
         return sizes;
     }
 
-    public void find_place(ClientGroup clientGroup) throws InterruptedException {
+    public int find_place(ClientGroup clientGroup) throws InterruptedException {
         int i = 0;
+        int place;
         Table[] appropriateTables = Arrays.stream(tables).filter(x -> x.getSize() >= clientGroup.getGroupSize())
                                             .toArray(Table[]::new);
         System.out.println("!!!!!!!!!"+ Arrays.toString(appropriateTables));
@@ -59,13 +60,9 @@ public class Pizzeria {
             lock.lock();
             Table table = appropriateTables[i];
             if (table.canSit(clientGroup)) {
-                try {
-                    lock.unlock();
-                    table.occupy(clientGroup);
-                    return;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                place = table.occupy(clientGroup);
+                lock.unlock();
+                return place;
             }
             lock.unlock();
             i = (i+1)%appropriateTables.length;

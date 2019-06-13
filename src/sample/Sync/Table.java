@@ -14,6 +14,7 @@ public class Table {
     private int occupation = 0;
     private ArrayList<ClientGroup> clientGroups;
     private boolean priority = false;
+    private int groupsCount = 0;
 
     public Table(int id) {
         this.id = id;
@@ -50,16 +51,20 @@ public class Table {
         }
     }
 
-    public synchronized void occupy(ClientGroup clientGroup) throws InterruptedException {
+    public synchronized int occupy(ClientGroup clientGroup) throws InterruptedException {
         clientGroup.setTable(this);
-        this.occupation += clientGroup.getGroupSize();
-        this.clientGroups.add(clientGroup);
-        }
+        occupation += clientGroup.getGroupSize();
+        clientGroups.add(clientGroup);
+        groupsCount++;
+
+        return groupsCount;
+    }
 
     public synchronized void release(ClientGroup clientGroup) throws InterruptedException {
 
-       this.occupation -= clientGroup.getGroupSize();
-       this.clientGroups.remove(clientGroup);
+       occupation -= clientGroup.getGroupSize();
+       clientGroups.remove(clientGroup);
+       groupsCount--;
        notifyAll();
     }
 
@@ -87,5 +92,7 @@ public class Table {
                 "size=" + size +
                 '}';
     }
+
+    public int getGroupsCount(){ return this.groupsCount; }
 }
 

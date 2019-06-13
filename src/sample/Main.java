@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Sync.ClientGroup;
 import sample.Sync.Pizzeria;
+import sample.controllers.Controller;
 
 public class Main extends Application {
 
@@ -15,7 +16,7 @@ public class Main extends Application {
         int threadsAmount  = 10;
         Pizzeria pizzeria = new Pizzeria();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("scenes/sample.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();
         controller.setSizes(pizzeria.getSizes());
